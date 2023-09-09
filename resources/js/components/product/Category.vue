@@ -82,15 +82,21 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Tên</label>
-                                    <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control"
+                                    <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }"
+                                           class="form-control"
                                            name="name" type="text">
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label>Loại</label>
-                                    <input v-model="form.loai" :class="{ 'is-invalid': form.errors.has('loai') }" class="form-control"
-                                           name="loai" type="text">
+                                    <select :class="{ 'is-invalid': form.errors.has('loai')} "
+                                            class="custom-select"
+                                            name="loai"
+                                            v-model="form.loai">
+                                        <option v-for="typeCate in typeCategories" >{{ typeCate }}</option>
+                                    </select>
                                     <has-error :form="form" field="loai"></has-error>
+
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -112,6 +118,7 @@ export default {
         return {
             editmode: false,
             categories: {},
+            typeCategories: {},
             form: new Form({
                 id: '',
                 name: '',
@@ -165,6 +172,9 @@ export default {
             if (this.$gate.isAdmin()) {
                 axios.get("/api/category").then(({data}) => (this.categories = data.data));
             }
+        },
+        loadListTYpeCategories() {
+            axios.get("/api/category/type").then(({data}) => (this.typeCategories = data.data));
         },
         deleteCate(id) {
             Swal.fire({
@@ -222,6 +232,7 @@ export default {
 
         this.$Progress.start();
         this.loadCategories();
+        this.loadListTYpeCategories();
         this.$Progress.finish();
     }
 }

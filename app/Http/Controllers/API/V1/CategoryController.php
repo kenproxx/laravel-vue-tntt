@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use ReflectionClass;
 
 class CategoryController extends BaseController
 {
@@ -32,6 +32,15 @@ class CategoryController extends BaseController
         $categories = $this->category->latest()->paginate(10);
 
         return $this->sendResponse($categories, 'Category list');
+    }
+
+    public function getListTypeCategory()
+    {
+        $reflection = new ReflectionClass('\App\Enum\CategoriesEnum');
+        $constants = $reflection->getConstants();
+
+        $categoryArray = array_values($constants);
+        return $this->sendResponse($categoryArray, 'List Type Category');
     }
 
     /**
