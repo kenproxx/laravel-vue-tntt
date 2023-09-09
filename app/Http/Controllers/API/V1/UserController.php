@@ -54,6 +54,7 @@ class UserController extends BaseController
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'type' => $request['type'],
+            'status' => $request['status'],
         ]);
 
         return $this->sendResponse($user, 'User Created Successfully');

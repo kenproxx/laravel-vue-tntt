@@ -116,6 +116,15 @@
                                     </select>
                                     <has-error :form="form" field="type"></has-error>
                                 </div>
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select id="status" v-model="form.status" :class="{ 'is-invalid': form.errors.has('status') }" class="form-control"
+                                            name="status">
+                                        <option :value="ACTIVE" selected>{{ACTIVE}}</option>
+                                        <option :value="INACTIVE">{{INACTIVE}}</option>
+                                    </select>
+                                    <has-error :form="form" field="status"></has-error>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" data-dismiss="modal" type="button">Đóng</button>
@@ -143,7 +152,10 @@ export default {
                 email: '',
                 password: '',
                 email_verified_at: '',
-            })
+                status: '',
+            }),
+            ACTIVE: this.$status.ACTIVE,
+            INACTIVE: this.$status.INACTIVE,
         }
     },
     methods: {
@@ -249,10 +261,8 @@ export default {
 
     },
     mounted() {
-        console.log('User Component mounted.')
     },
     created() {
-
         this.$Progress.start();
         this.loadUsers();
         this.$Progress.finish();

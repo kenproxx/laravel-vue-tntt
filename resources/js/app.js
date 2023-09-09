@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import STATUS_USER from "./const";
+
 require('./bootstrap');
 
 import Vue from "vue";
@@ -14,6 +16,7 @@ window.Form = Form;
 
 import Gate from "./Gate";
 Vue.prototype.$gate = new Gate(window.user);
+Vue.prototype.$status = STATUS_USER;
 
 import Swal from 'sweetalert2';
 
