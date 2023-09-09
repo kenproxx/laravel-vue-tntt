@@ -7,7 +7,7 @@
 
             <div class="card" v-if="$gate.isAdmin()">
               <div class="card-header">
-                <h3 class="card-title">Tag List</h3>
+                <h3 class="card-title">Danh sách Địa chỉ</h3>
 
                 <div class="card-tools">
 
@@ -23,20 +23,20 @@
                   <thead>
                     <tr>
                       <th>STT</th>
-                      <th>Name</th>
-                      <th>Created</th>
+                      <th>Code</th>
+                      <th>Tên</th>
                       <th>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
-                     <tr v-for="tag in tags.data" :key="tag.id">
+                     <tr v-for="add in address" :key="add.id">
 
-                      <td>{{tag.id}}</td>
-                      <td class="text-capitalize">{{tag.name}}</td>
-                      <td>{{tag.created_at}}</td>
+                      <td>{{add.id}}</td>
+                      <td class="text-capitalize">{{add.code}}</td>
+                      <td>{{add.dien_giai}}</td>
                       <td>
 
-                        <a href="#" @click="editModal(tag)">
+                        <a href="#" @click="editModal(add)">
                             <i class="fa fa-edit blue"></i>
                         </a>
                       </td>
@@ -45,9 +45,9 @@
                 </table>
               </div>
               <!-- /.card-body -->
-              <div class="card-footer">
-                  <pagination :data="tags" @pagination-change-page="getResults"></pagination>
-              </div>
+<!--              <div class="card-footer">-->
+<!--                  <pagination :data="address" @pagination-change-page="getResults"></pagination>-->
+<!--              </div>-->
             </div>
             <!-- /.card -->
           </div>
@@ -99,7 +99,7 @@
         data () {
             return {
                 editmode: false,
-                tags : {},
+                address : {},
                 form: new Form({
                     id : '',
                     name: '',
@@ -112,14 +112,13 @@
 
                   this.$Progress.start();
 
-                  axios.get('/api/tag?page=' + page).then(({ data }) => (this.tags = data.data));
+                  axios.get('/api/address?page=' + page).then(({ data }) => (this.address = data.data));
 
                   this.$Progress.finish();
             },
             updateTag(){
                 this.$Progress.start();
-                // console.log('Editing data');
-                this.form.put('/api/tag/'+this.form.id)
+                this.form.put('/api/address/'+this.form.id)
                 .then((response) => {
                     // success
                     $('#addNew').modal('hide');
@@ -128,7 +127,6 @@
                       title: response.data.message
                     });
                     this.$Progress.finish();
-                        //  Fire.$emit('AfterCreate');
 
                     this.loadTags();
                 })
@@ -151,13 +149,13 @@
 
             loadTags(){
                 if(this.$gate.isAdmin()){
-                    axios.get("/api/tag").then(({ data }) => (this.tags = data.data));
+                    axios.get("/api/address").then(({ data }) => (this.address = data.data));
                 }
             },
 
             createTag(){
 
-                this.form.post('/api/tag')
+                this.form.post('/api/address')
                 .then((response)=>{
                     $('#addNew').modal('hide');
 
