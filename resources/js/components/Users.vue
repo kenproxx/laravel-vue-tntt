@@ -158,7 +158,6 @@ export default {
         },
         updateUser() {
             this.$Progress.start();
-            // console.log('Editing data');
             this.form.put('api/user/' + this.form.id)
                 .then((response) => {
                     // success

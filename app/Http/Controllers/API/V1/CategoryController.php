@@ -82,4 +82,16 @@ class CategoryController extends BaseController
 
         return $this->sendResponse($tag, 'Thông tin Tham số đã được cập nhật');
     }
+
+    public function destroy($id)
+    {
+
+        $this->authorize('isAdmin');
+
+        $cate = Category::findOrFail($id);
+
+        $cate->delete();
+
+        return $this->sendResponse([$cate], 'Tham số đã được xóa');
+    }
 }
