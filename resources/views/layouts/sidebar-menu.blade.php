@@ -4,7 +4,7 @@
         <router-link to="/dashboard" class="nav-link">
           <i class="nav-icon fas fa-tachometer-alt blue"></i>
           <p>
-            Dashboard
+            Thống kê
           </p>
         </router-link>
       </li>
@@ -22,19 +22,19 @@
         <li class="nav-item">
           <router-link to="/users" class="nav-link">
             <i class="fa fa-users nav-icon blue"></i>
-            <p>Users</p>
+            <p>Đoàn sinh</p>
           </router-link>
         </li>
       @endcan
 
-      
+
 
       @can('isAdmin')
       <li class="nav-item has-treeview">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-cog green"></i>
           <p>
-            Settings
+            Nâng cao
             <i class="right fas fa-angle-left"></i>
           </p>
         </a>
@@ -44,7 +44,7 @@
             <router-link to="/product/category" class="nav-link">
               <i class="nav-icon fas fa-list-ol green"></i>
               <p>
-                Category
+                  Tham số
               </p>
             </router-link>
           </li>
@@ -56,7 +56,7 @@
               </p>
             </router-link>
           </li>
-          
+
             <li class="nav-item">
               <router-link to="/developer" class="nav-link">
                   <i class="nav-icon fas fa-cogs white"></i>
@@ -69,8 +69,8 @@
       </li>
 
       @endcan
-      
-      
+
+
 
       <li class="nav-item">
         <a href="#" class="nav-link" onclick="event.preventDefault();

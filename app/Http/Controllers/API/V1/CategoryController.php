@@ -60,10 +60,10 @@ class CategoryController extends BaseController
     {
         $tag = $this->category->create([
             'name' => $request->get('name'),
-            'description' => $request->get('description'),
+            'loai' => $request->get('loai'),
         ]);
 
-        return $this->sendResponse($tag, 'Category Created Successfully');
+        return $this->sendResponse($tag, 'Tạo mới Tham số thành công');
     }
 
     /**
@@ -80,6 +80,6 @@ class CategoryController extends BaseController
 
         $tag->update($request->all());
 
-        return $this->sendResponse($tag, 'Category Information has been updated');
+        return $this->sendResponse($tag, 'Thông tin Tham số đã được cập nhật');
     }
 }

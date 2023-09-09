@@ -4,16 +4,16 @@
         <div class="row">
 
           <div class="col-12">
-        
+
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Tag List</h3>
 
                 <div class="card-tools">
-                  
+
                   <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addNew">
                       <i class="fa fa-plus-square"></i>
-                      Add New
+                      Thêm mới
                   </button>
                 </div>
               </div>
@@ -64,8 +64,8 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                   </form>
                 </div>
@@ -93,7 +93,7 @@
               axios.get("api/tags").then(({ data }) => (this.tags = data.data));
             // }
           },
-          
+
           createTag(){
               this.$Progress.start();
 
@@ -120,7 +120,7 @@
 
         },
         mounted() {
-            
+
         },
         created() {
             this.$Progress.start();

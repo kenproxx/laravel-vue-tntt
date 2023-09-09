@@ -13,7 +13,7 @@
 
                   <button type="button" class="btn btn-sm btn-primary" @click="newModal">
                       <i class="fa fa-plus-square"></i>
-                      Add New
+                      Thêm mới
                   </button>
                 </div>
               </div>
@@ -22,12 +22,12 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>STT</th>
                       <th>Name</th>
                       <th>Description</th>
                       <th>Category</th>
                       <th>Price</th>
-                      <th>Action</th>
+                      <th>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -117,9 +117,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                        <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
+                        <button v-show="!editmode" type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                   </form>
                 </div>

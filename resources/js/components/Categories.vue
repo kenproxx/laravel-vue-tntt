@@ -4,16 +4,16 @@
         <div class="row">
 
           <div class="col-12">
-        
+
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Category List</h3>
+                <h3 class="card-title">Danh sách tham số</h3>
 
                 <div class="card-tools">
-                  
+
                   <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProduct">
                       <i class="fa fa-plus-square"></i>
-                      Add New
+                      Thêm mới
                   </button>
                 </div>
               </div>
@@ -23,10 +23,9 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <!-- <th>Photo</th> -->
-                      <th>Action</th>
+                      <th>Tên</th>
+                      <th>Loại</th>
+                      <th>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -34,7 +33,7 @@
 
                       <td>{{product.id}}</td>
                       <td>{{product.name}}</td>
-                      <td>{{product.description | truncate(30, '...')}}</td>
+                      <td>{{product.loai | truncate(30, '...')}}</td>
                       <td>
                       </td>
                     </tr>
@@ -61,21 +60,21 @@
                 <form @submit.prevent="createProduct">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên</label>
                             <input v-model="form.name" type="text" name="name"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                             <has-error :form="form" field="name"></has-error>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
-                            <input v-model="form.description" type="text" name="description"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
-                            <has-error :form="form" field="description"></has-error>
+                            <label>Loại</label>
+                            <input v-model="form.description" type="text" name="loai"
+                                class="form-control" :class="{ 'is-invalid': form.errors.has('loai') }">
+                            <has-error :form="form" field="loai"></has-error>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                   </form>
                 </div>
@@ -105,7 +104,7 @@
               axios.get("api/category").then(({ data }) => (this.categories = data.data));
             // }
           },
-          
+
           createCategory(){
               this.$Progress.start();
 
@@ -132,7 +131,7 @@
 
         },
         mounted() {
-            
+
         },
         created() {
             this.$Progress.start();

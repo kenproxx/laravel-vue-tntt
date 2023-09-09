@@ -4,16 +4,16 @@
         <div class="row">
 
           <div class="col-12">
-        
+
             <div class="card" v-if="$gate.isAdmin()">
               <div class="card-header">
-                <h3 class="card-title">Category List</h3>
+                <h3 class="card-title">Danh sách Tham số</h3>
 
                 <div class="card-tools">
-                  
+
                   <button type="button" class="btn btn-sm btn-primary" @click="newModal">
                       <i class="fa fa-plus-square"></i>
-                      Add New
+                      Thêm mới
                   </button>
                 </div>
               </div>
@@ -22,11 +22,11 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>STT</th>
                       <th>Name</th>
-                      <th>Description</th>
-                      <th>Created</th>
-                      <th>Action</th>
+                      <th>Loại</th>
+                      <th>Ngày tạo</th>
+                      <th>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -34,7 +34,7 @@
 
                       <td>{{category.id}}</td>
                       <td class="text-capitalize">{{category.name}}</td>
-                      <td>{{category.description}}</td>
+                      <td>{{category.loai}}</td>
                       <td>{{category.created_at}}</td>
                       <td>
 
@@ -65,8 +65,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" v-show="!editmode">Create New Category</h5>
-                    <h5 class="modal-title" v-show="editmode">Update Category</h5>
+                    <h5 class="modal-title" v-show="!editmode">Tạo mới</h5>
+                    <h5 class="modal-title" v-show="editmode">Sửa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -77,22 +77,22 @@
                 <form @submit.prevent="editmode ? updateCategory() : createCategory()">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Tên</label>
                             <input v-model="form.name" type="text" name="name"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                             <has-error :form="form" field="name"></has-error>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
-                            <input v-model="form.description" type="text" name="description"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
-                            <has-error :form="form" field="description"></has-error>
+                            <label>Loại</label>
+                            <input v-model="form.loai" type="text" name="loai"
+                                class="form-control" :class="{ 'is-invalid': form.errors.has('loai') }">
+                            <has-error :form="form" field="loai"></has-error>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                        <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button v-show="editmode" type="submit" class="btn btn-success">Cập nhật</button>
+                        <button v-show="!editmode" type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                   </form>
                 </div>
@@ -111,7 +111,7 @@
                 form: new Form({
                     id : '',
                     name: '',
-                    description: '',
+                    loai: '',
                 })
             }
         },
@@ -120,7 +120,7 @@
             getResults(page = 1) {
 
                   this.$Progress.start();
-                  
+
                   axios.get('/api/category?page=' + page).then(({ data }) => (this.categories = data.data));
 
                   this.$Progress.finish();
@@ -162,7 +162,7 @@
                     axios.get("/api/category").then(({ data }) => (this.categories = data.data));
                 }
             },
-            
+
             createCategory(){
 
                 this.form.post('/api/category')
