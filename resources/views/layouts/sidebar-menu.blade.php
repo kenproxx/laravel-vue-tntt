@@ -19,17 +19,34 @@
         </li>
 
         @can('isAdmin')
-            <li class="nav-item">
-                <router-link to="/users" class="nav-link">
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
                     <i class="fa fa-users nav-icon blue"></i>
-                    <p>Đoàn sinh</p>
-                </router-link>
+                    <p>
+                        Đoàn sinh
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'ThieuNhi'}" class="nav-link">
+                            <i class="nav-icon fas fa-list-ol green"></i>
+                            <p>
+                                Thiếu nhi
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'HuynhTruong'}" class="nav-link">
+                            <i class="nav-icon fas fa-tags green"></i>
+                            <p>
+                                Huynh truởng
+                            </p>
+                        </router-link>
+                    </li>
+                </ul>
             </li>
-        @endcan
-
-
-
-        @can('isAdmin')
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-cog green"></i>
