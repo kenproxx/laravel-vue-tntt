@@ -37,7 +37,7 @@ class EditUserTable extends Migration
             $table->string('nganh_id')->nullable();
             $table->string('cap_bac_id')->nullable();
             $table->string('trang_thai_hoc_tap')->nullable();
-            $table->string('status');
+            $table->integer('status')->default(1);
 
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
