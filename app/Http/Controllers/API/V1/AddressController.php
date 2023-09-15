@@ -46,14 +46,35 @@ class AddressController extends BaseController
      */
     public function store(Request $request)
     {
-        $tag = $this->address->create([
-            'name' => $request->get('name'),
-            'code' => $request->get('code'),
+        $address = $this->address->create([
+            'dien_giai' => $request->get('dien_giai'),
+            'code' => $this->genCodeAddress($request->get('code')),
             'cap' => $request->get('cap'),
             'created_by' => Auth::user()->id
         ]);
 
-        return $this->sendResponse($tag, 'Tag Created Successfully');
+        return $this->sendResponse($address, 'Tag Created Successfully');
+    }
+
+    public function genCodeAddress($input)
+    {
+        $randomNumber = rand(10, 99);
+
+        if ($input) {
+            $code = $input . "!" . $randomNumber;
+        } else {
+            $code = $randomNumber;
+        }
+
+        $isStop = true;
+        while ($isStop){
+            if (Address::where('code', $code)->first()) {
+                $code = $input . "!" . $randomNumber;
+            } else {
+                $isStop = false;
+            }
+        }
+        return $code;
     }
 
     /**

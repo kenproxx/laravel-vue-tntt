@@ -1,5 +1,6 @@
 <template>
-  <section class="content">
+
+    <section class="content">
     <div class="container-fluid">
         <div class="row">
 
@@ -85,7 +86,7 @@
                                     name="code"
                                     v-model="form.code">
                                 <option value="VN" selected>Không</option>
-                                <option v-for="add in addressList">{{ add }}</option>
+                                <option v-for="add in address" :value="add.code">{{ add.dien_giai }}</option>
                             </select>
                             <has-error :form="form" field="code"></has-error>
                         </div>
@@ -95,14 +96,14 @@
                                     class="custom-select"
                                     name="cap"
                                     v-model="form.cap">
-                                <option v-for="add in CAP_BAC_DIA_CHI">{{ add }}</option>
+                                <option v-for="add in CAP_BAC_DIA_CHI" :value="add">{{ add }}</option>
                             </select>
                             <has-error :form="form" field="cap"></has-error>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
+                        <button v-show="editmode" type="submit" class="btn btn-success" data-dismiss="modal">Update</button>
                         <button v-show="!editmode" type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                   </form>
@@ -193,7 +194,6 @@ import { CAP_BAC_DIA_CHI } from '../../const.js'
 
                 })
                 .catch(()=>{
-
                     Toast.fire({
                         icon: 'error',
                         title: 'Some error occured! Please try again'

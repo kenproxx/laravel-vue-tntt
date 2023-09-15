@@ -1,9 +1,3 @@
-<style scoped>
-.col-2-5 {
-    width: 20%;
-}
-</style>
-
 <template>
     <section class="content">
         <div class="container-fluid">
