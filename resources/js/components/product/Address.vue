@@ -70,15 +70,34 @@
                     </button>
                 </div>
 
-                <!-- <form @submit.prevent="createUser"> -->
-
                 <form @submit.prevent="editmode ? updateTag() : createTag()">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
-                            <input v-model="form.name" type="text" name="name"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                            <has-error :form="form" field="name"></has-error>
+                            <label>Tên</label>
+                            <input v-model="form.dien_giai" type="text" name="dien_giai"
+                                class="form-control" :class="{ 'is-invalid': form.errors.has('dien_giai') }">
+                            <has-error :form="form" field="dien_giai"></has-error>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ cha</label>
+                            <select :class="{ 'is-invalid': form.errors.has('code')} "
+                                    class="custom-select"
+                                    name="code"
+                                    v-model="form.code">
+                                <option value="VN" selected>Không</option>
+                                <option v-for="add in addressList">{{ add }}</option>
+                            </select>
+                            <has-error :form="form" field="code"></has-error>
+                        </div>
+                        <div class="form-group">
+                            <label>Cấp</label>
+                            <select :class="{ 'is-invalid': form.errors.has('cap')} "
+                                    class="custom-select"
+                                    name="cap"
+                                    v-model="form.cap">
+                                <option v-for="add in CAP_BAC_DIA_CHI">{{ add }}</option>
+                            </select>
+                            <has-error :form="form" field="cap"></has-error>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -95,15 +114,20 @@
 </template>
 
 <script>
+import { CAP_BAC_DIA_CHI } from '../../const.js'
     export default {
         data () {
             return {
                 editmode: false,
                 address : {},
+                addressList : {},
                 form: new Form({
-                    id : '',
-                    name: '',
-                })
+                    code: '',
+                    dien_giai: '',
+                    cap: '',
+                }),
+                CAP_BAC_DIA_CHI: CAP_BAC_DIA_CHI,
+
             }
         },
         methods: {

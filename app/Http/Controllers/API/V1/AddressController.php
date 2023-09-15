@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AddressController extends BaseController
 {
@@ -46,7 +47,10 @@ class AddressController extends BaseController
     public function store(Request $request)
     {
         $tag = $this->address->create([
-            'name' => $request->get('name')
+            'name' => $request->get('name'),
+            'code' => $request->get('code'),
+            'cap' => $request->get('cap'),
+            'created_by' => Auth::user()->id
         ]);
 
         return $this->sendResponse($tag, 'Tag Created Successfully');
