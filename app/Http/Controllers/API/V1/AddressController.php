@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends BaseController
 {
@@ -23,10 +24,30 @@ class AddressController extends BaseController
      */
     public function index()
     {
-        $address = $this->address->get();
+        // Câu truy vấn CTE
+        $cteQuery = "
+        WITH RECURSIVE AddressHierarchy AS (
+            SELECT id, dien_giai, parent_code, CAST(dien_giai AS CHAR(1000)) AS Path
+            FROM addresses
+            WHERE parent_code = ''
+            UNION ALL
+            SELECT a.id, a.dien_giai, a.parent_code, CONCAT(a.dien_giai, ' > ', h.Path)
+            FROM AddressHierarchy h
+            JOIN addresses a ON h.id = a.parent_code
+        )
+        SELECT id, dien_giai, Path
+        FROM AddressHierarchy;
+    ";
 
-        return $this->sendResponse($address, 'Address list');
+        // Thực thi câu truy vấn và lấy kết quả
+        $result = DB::select($cteQuery);
+
+        dd($result);
+
+        // Trả về kết quả thông qua sendResponse
+        return $this->sendResponse($result, 'Address list with hierarchy');
     }
+
 
     /**
      * Show the form for creating a new resource.

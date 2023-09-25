@@ -15,9 +15,9 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
             $table->string('dien_giai');
             $table->string('cap');
+            $table->string('parent_id');
 
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

@@ -24,7 +24,6 @@
                   <thead>
                     <tr>
                       <th>STT</th>
-                      <th>Code</th>
                       <th>Tên</th>
                       <th>Thao tác</th>
                     </tr>
@@ -33,7 +32,6 @@
                      <tr v-for="add in address" :key="add.id">
 
                       <td>{{add.id}}</td>
-                      <td class="text-capitalize">{{add.code}}</td>
                       <td>{{add.dien_giai}}</td>
                       <td>
 
@@ -74,6 +72,29 @@
                 <form @submit.prevent="editmode ? updateTag() : createTag()">
                     <div class="modal-body">
                         <div class="form-group">
+                            <a-tree-select
+                                v-model="value"
+                                show-search
+                                style="width: 100%"
+                                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                                placeholder="Please select"
+                                allow-clear
+                                tree-default-expand-all
+                            >
+                                <a-tree-select-node key="0-1" value="parent 1" title="parent 1">
+                                    <a-tree-select-node key="0-1-1" value="parent 1-0" title="parent 1-0">
+                                        <a-tree-select-node key="random" :selectable="false" value="leaf1" title="my leaf" />
+                                        <a-tree-select-node key="random1" value="leaf2" title="your leaf" />
+                                    </a-tree-select-node>
+                                    <a-tree-select-node key="random2" value="parent 1-1" title="parent 1-1">
+                                        <a-tree-select-node key="random3" value="sss">
+                                            <b slot="title" style="color: #08c">sss</b>
+                                        </a-tree-select-node>
+                                    </a-tree-select-node>
+                                </a-tree-select-node>
+                            </a-tree-select>
+                        </div>
+                        <div class="form-group">
                             <label>Tên</label>
                             <input v-model="form.dien_giai" type="text" name="dien_giai"
                                 class="form-control" :class="{ 'is-invalid': form.errors.has('dien_giai') }">
@@ -86,7 +107,7 @@
                                     name="code"
                                     v-model="form.code">
                                 <option value="VN" selected>Không</option>
-                                <option v-for="add in address" :value="add.code">{{ add.dien_giai }}</option>
+                                <option v-for="add in address" :value="add.id">{{ add.dien_giai }}</option>
                             </select>
                             <has-error :form="form" field="code"></has-error>
                         </div>
@@ -115,8 +136,11 @@
 </template>
 
 <script>
+import ATreeSelect from 'ant-design-vue/lib/tree-select';
 import { CAP_BAC_DIA_CHI } from '../../const.js'
     export default {
+    components: {'a-tree-select': ATreeSelect},
+
         data () {
             return {
                 editmode: false,
@@ -128,7 +152,8 @@ import { CAP_BAC_DIA_CHI } from '../../const.js'
                     cap: '',
                 }),
                 CAP_BAC_DIA_CHI: CAP_BAC_DIA_CHI,
-
+                treeExpandedKeys: [],
+                value: undefined,
             }
         },
         methods: {
@@ -153,7 +178,7 @@ import { CAP_BAC_DIA_CHI } from '../../const.js'
                     });
                     this.$Progress.finish();
 
-                    this.loadTags();
+                    this.loadAddresses();
                 })
                 .catch(() => {
                     this.$Progress.fail();
@@ -172,7 +197,7 @@ import { CAP_BAC_DIA_CHI } from '../../const.js'
                 $('#addNew').modal('show');
             },
 
-            loadTags(){
+            loadAddresses(){
                 if(this.$gate.isAdmin()){
                     axios.get("/api/address").then(({ data }) => (this.address = data.data));
                 }
@@ -190,7 +215,7 @@ import { CAP_BAC_DIA_CHI } from '../../const.js'
                     });
 
                     this.$Progress.finish();
-                    this.loadTags();
+                    this.loadAddresses();
 
                 })
                 .catch(()=>{
@@ -208,7 +233,7 @@ import { CAP_BAC_DIA_CHI } from '../../const.js'
         created() {
 
             this.$Progress.start();
-            this.loadTags();
+            this.loadAddresses();
             this.$Progress.finish();
         }
     }
