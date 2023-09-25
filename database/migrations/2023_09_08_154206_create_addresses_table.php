@@ -14,10 +14,13 @@ class CreateAddressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
-            $table->string('dien_giai');
-            $table->string('cap');
-            $table->string('parent_id');
+            $table->increments('id');
+
+            $table->integer('parent_id')->nullable();
+            $table->integer('left')->nullable();
+            $table->integer('right')->nullable();
+            $table->integer('depth')->nullable();
+            $table->string('data', 255);
 
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
