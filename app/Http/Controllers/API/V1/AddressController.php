@@ -48,11 +48,12 @@ class AddressController extends BaseController
      */
     public function store(Request $request)
     {
+        $root = Addresses::where('id', $request->input('parent_id'))->first();
         $address = $this->address->create([
-            'data' => $request->get('dien_giai'),
-            'created_by' => Auth::user()->id
+            'data' => $request->get('name'),
+            'cap' => $request->get('cap'),
+            'created_by' => Auth::user()->name
         ]);
-        $root = Addresses::root();
         $address->makeChildOf($root);
         return $this->sendResponse($address, 'Tag Created Successfully');
     }

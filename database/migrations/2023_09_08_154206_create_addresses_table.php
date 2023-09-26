@@ -21,6 +21,8 @@ class CreateAddressesTable extends Migration
             $table->integer('right')->nullable();
             $table->integer('depth')->nullable();
             $table->string('data', 255);
+            $table->string('cap', 255);
+            $table->string('code', 255);
 
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
