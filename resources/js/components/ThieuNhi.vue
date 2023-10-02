@@ -32,7 +32,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="user in users.data" :key="user.id">
+                                <tr v-for="user in users" :key="user.id">
 
                                     <td>{{ user.id }}</td>
                                     <td class="text-capitalize">{{ user.name }}</td>
