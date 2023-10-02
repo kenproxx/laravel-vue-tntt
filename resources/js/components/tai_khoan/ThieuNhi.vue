@@ -32,8 +32,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="user in users" :key="user.id">
-
+                                <tr v-for="user in users.data.data" :key="user.id">
                                     <td>{{ user.id }}</td>
                                     <td class="text-capitalize">{{ user.name }}</td>
                                     <td>{{ user.email }}</td>
@@ -43,9 +42,9 @@
 
                                     <td>
 
-                                        <a href="#" @click="editModal(user)">
+                                        <router-link :to="{ name: 'SuaTaiKhoan', params: { userId: user.id } }" >
                                             <i class="fa fa-edit blue"></i>
-                                        </a>
+                                        </router-link>
                                         /
                                         <a href="#" @click="deleteUser(user.id)">
                                             <i class="fa fa-trash red"></i>
@@ -57,7 +56,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <pagination :data="users" @pagination-change-page="getResults"></pagination>
+<!--                            <pagination :data="users" @pagination-change-page="getResults"></pagination>-->
                         </div>
                     </div>
                     <!-- /.card -->
@@ -87,20 +86,23 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control"
+                                    <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }"
+                                           class="form-control"
                                            name="name" type="text">
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control"
+                                    <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }"
+                                           class="form-control"
                                            name="email" type="text">
                                     <has-error :form="form" field="email"></has-error>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" autocomplete="false"
+                                    <input v-model="form.password"
+                                           :class="{ 'is-invalid': form.errors.has('password') }" autocomplete="false"
                                            class="form-control" name="password"
                                            type="password">
                                     <has-error :form="form" field="password"></has-error>
@@ -108,7 +110,8 @@
 
                                 <div class="form-group">
                                     <label>User Role</label>
-                                    <select id="type" v-model="form.type" :class="{ 'is-invalid': form.errors.has('type') }" class="form-control"
+                                    <select id="type" v-model="form.type"
+                                            :class="{ 'is-invalid': form.errors.has('type') }" class="form-control"
                                             name="type">
                                         <option value="">Select User Role</option>
                                         <option value="admin">Admin</option>
@@ -118,10 +121,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Trạng thái</label>
-                                    <select id="status" v-model="form.status" :class="{ 'is-invalid': form.errors.has('status') }" class="form-control"
+                                    <select id="status" v-model="form.status"
+                                            :class="{ 'is-invalid': form.errors.has('status') }" class="form-control"
                                             name="status">
-                                        <option :value="ACTIVE" selected>{{ACTIVE}}</option>
-                                        <option :value="INACTIVE">{{INACTIVE}}</option>
+                                        <option :value="ACTIVE" selected>{{ ACTIVE }}</option>
+                                        <option :value="INACTIVE">{{ INACTIVE }}</option>
                                     </select>
                                     <has-error :form="form" field="status"></has-error>
                                 </div>
@@ -154,8 +158,9 @@ export default {
                 email_verified_at: '',
                 status: '',
             }),
-            ACTIVE: this.$status.ACTIVE,
-            INACTIVE: this.$status.INACTIVE,
+            // ACTIVE: this.$status.ACTIVE,
+            ACTIVE: 1,
+            INACTIVE: 2,
         }
     },
     methods: {
@@ -229,7 +234,9 @@ export default {
             this.$Progress.start();
 
             if (this.$gate.isAdmin()) {
-                axios.get("api/user").then(({data}) => (this.users = data.data));
+                axios.get("api/user").then((data) => {
+                    this.users = data.data;
+                })
             }
 
             this.$Progress.finish();
