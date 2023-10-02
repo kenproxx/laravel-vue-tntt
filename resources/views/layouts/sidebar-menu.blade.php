@@ -1,7 +1,7 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-            <router-link to="/dashboard" class="nav-link">
+            <router-link :to="{ name: 'TrangChu' }" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt blue"></i>
                 <p>
                     Thống kê
@@ -10,7 +10,7 @@
         </li>
 
         <li class="nav-item">
-            <router-link to="/products" class="nav-link">
+            <router-link :to="{ name: 'xxx'}" class="nav-link">
                 <i class="nav-icon fas fa-list orange"></i>
                 <p>
                     Product
@@ -58,7 +58,7 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <router-link to="/product/category" class="nav-link">
+                        <router-link :to="{ name: 'ThamSo'}" class="nav-link">
                             <i class="nav-icon fas fa-list-ol green"></i>
                             <p>
                                 Tham số
@@ -66,7 +66,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/address" class="nav-link">
+                        <router-link :to="{ name: 'DiaChi'}" class="nav-link">
                             <i class="nav-icon fas fa-tags green"></i>
                             <p>
                                 Địa chỉ
@@ -75,7 +75,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <router-link to="/developer" class="nav-link">
+                        <router-link :to="{ name: 'CauHinh'}" class="nav-link">
                             <i class="nav-icon fas fa-cogs white"></i>
                             <p>
                                 Developer
