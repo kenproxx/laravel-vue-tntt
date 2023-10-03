@@ -19,44 +19,30 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên</th>
-                                    <th>Email</th>
-                                    <th>Cấp bậc</th>
-                                    <th>Email Verified?</th>
-                                    <th>Created</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="user in users.data.data" :key="user.id">
-                                    <td>{{ user.id }}</td>
-                                    <td class="text-capitalize">{{ user.name }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td class="text-capitalize">{{ user.type }}</td>
-                                    <td :inner-html.prop="user.email_verified_at | yesno"></td>
-                                    <td>{{ user.created_at }}</td>
-
-                                    <td>
-
-                                        <router-link :to="{ name: 'SuaTaiKhoan', params: { userId: user.id } }" >
-                                            <i class="fa fa-edit blue"></i>
-                                        </router-link>
-                                        /
-                                        <a href="#" @click="deleteUser(user.id)">
-                                            <i class="fa fa-trash red"></i>
+                            <a-table :columns="columns" :data-source="users.data.data" :scroll="{ x: 1500, y: 300 }">
+                                <a slot="action" slot-scope="text">
+                                    <a-dropdown>
+                                        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                            <a-icon type="menu"/>
                                         </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                        <a-menu slot="overlay">
+                                            <a-menu-item>
+                                                <a href="javascript:;">Cập nhật thông tin</a>
+                                            </a-menu-item>
+                                            <a-menu-item>
+                                                <a href="javascript:;">Thay đổi mật khẩu</a>
+                                            </a-menu-item>
+                                            <a-menu-item>
+                                                <a href="javascript:;">3rd menu item</a>
+                                            </a-menu-item>
+                                        </a-menu>
+                                    </a-dropdown>
+                                </a>
+                            </a-table>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-<!--                            <pagination :data="users" @pagination-change-page="getResults"></pagination>-->
+                            <!--                            <pagination :data="users" @pagination-change-page="getResults"></pagination>-->
                         </div>
                     </div>
                     <!-- /.card -->
@@ -161,6 +147,21 @@ export default {
             // ACTIVE: this.$status.ACTIVE,
             ACTIVE: 1,
             INACTIVE: 2,
+            columns: [
+                {title: 'Tên Thánh', width: 100, dataIndex: 'ten_thanh', key: 'name', fixed: 'left'},
+                {title: 'Tên gọi', width: 100, dataIndex: 'name', key: 'age', fixed: 'left'},
+                {title: 'Lớp', dataIndex: 'lop_hoc_id', key: '5', width: 150},
+                {title: 'Ngành', dataIndex: 'address', key: '6', width: 150},
+                {title: 'Email', dataIndex: 'email', key: '7', width: 150},
+                {title: 'SDT', dataIndex: 'so_dien_thoai', key: '8', width: 150},
+                {
+                    title: 'Thao tác',
+                    key: 'operation',
+                    fixed: 'right',
+                    width: 100,
+                    scopedSlots: {customRender: 'action'},
+                },
+            ]
         }
     },
     methods: {
