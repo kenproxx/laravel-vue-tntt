@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import STATUS_USER from "./const";
+import {STATUS_USER} from "./const";
 
 require('./bootstrap');
 
