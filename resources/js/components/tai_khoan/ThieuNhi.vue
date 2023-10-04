@@ -6,28 +6,62 @@
                 <div class="col-12">
 
                     <div v-if="this.$gate.isAdmin()" class="card">
+                        <div class="card-body">
+                            <a-form class="ant-advanced-search-form" :form="form" @submit="handleSearch">
+                                <a-row :gutter="24">
+                                    <a-col
+                                        v-for="i in 10"
+                                        :key="i"
+                                        :span="8"
+                                        :style="{ display: i < count ? 'block' : 'none' }"
+                                    >
+                                        <a-form-item :label="`Field ${i}`">
+                                            <a-input
+                                                placeholder="placeholder"
+                                            />
+                                        </a-form-item>
+                                    </a-col>
+                                </a-row>
+                                <a-row>
+                                    <a-col :span="24" :style="{ textAlign: 'right' }">
+                                        <a-button type="primary" html-type="submit">
+                                            Search
+                                        </a-button>
+                                        <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
+                                            Clear
+                                        </a-button>
+                                        <a :style="{ marginLeft: '8px', fontSize: '12px' }" @click="toggle">
+                                            Collapse
+                                            <a-icon :type="expand ? 'up' : 'down'"/>
+                                        </a>
+                                    </a-col>
+                                </a-row>
+                            </a-form>
+                        </div>
+
                         <div class="card-header">
                             <h3 class="card-title">Danh sách đoàn sinh</h3>
-
                             <div class="card-tools">
-
-                                <button class="btn btn-sm btn-primary" type="button" @click="newModal">
-                                    <i class="fa fa-plus-square"></i>
-                                    Thêm mới
-                                </button>
+                                <a-button type="primary" @click="newModal"><i class="fa fa-plus-square"></i> Thêm mới
+                                </a-button>
                             </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
-                            <a-table :columns="columns" :data-source="users.data.data" :scroll="{ x: 1500, y: 300 }">
-                                <a slot="action" slot-scope="text">
+                            <a-table :columns="columns" :data-source="users.data.data"
+                                     :scroll="{ x: 1500, y: 300 }">
+                                <a slot="stt" slot-scope="text, record, index">{{ index + 1 }}</a>
+                                <a slot="action" slot-scope="text, record, index">
                                     <a-dropdown>
                                         <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                             <a-icon type="menu"/>
                                         </a>
                                         <a-menu slot="overlay">
                                             <a-menu-item>
-                                                <a href="javascript:;">Cập nhật thông tin</a>
+                                                <router-link
+                                                    :to="{ name: 'SuaTaiKhoan', params: { userId: record.id } }">
+                                                    Cập nhật thông tin
+                                                </router-link>
                                             </a-menu-item>
                                             <a-menu-item>
                                                 <a href="javascript:;">Thay đổi mật khẩu</a>
@@ -135,6 +169,7 @@ export default {
         return {
             editmode: false,
             users: {},
+            expand: false,
             form: new Form({
                 id: '',
                 type: '',
@@ -148,6 +183,14 @@ export default {
             ACTIVE: 1,
             INACTIVE: 2,
             columns: [
+                {
+                    title: 'STT',
+                    width: 100,
+                    key: 'stt',
+                    scopedSlots: {customRender: 'stt'},
+                    fixed: 'left',
+                    align: 'center'
+                },
                 {title: 'Tên Thánh', width: 100, dataIndex: 'ten_thanh', key: 'name', fixed: 'left'},
                 {title: 'Tên gọi', width: 100, dataIndex: 'name', key: 'age', fixed: 'left'},
                 {title: 'Lớp', dataIndex: 'lop_hoc_id', key: '5', width: 150},
@@ -160,12 +203,32 @@ export default {
                     fixed: 'right',
                     width: 100,
                     scopedSlots: {customRender: 'action'},
+                    align: 'center'
                 },
             ]
         }
     },
+    computed: {
+        count() {
+            return this.expand ? 11 : 7;
+        },
+    },
     methods: {
+        handleSearch(e) {
+            e.preventDefault();
+            this.form.validateFields((error, values) => {
+                console.log('error', error);
+                console.log('Received values of form: ', values);
+            });
+        },
 
+        handleReset() {
+            this.form.resetFields();
+        },
+
+        toggle() {
+            this.expand = !this.expand;
+        },
         getResults(page = 1) {
 
             this.$Progress.start();

@@ -181,6 +181,7 @@
                     </a-row>
                 </a-collapse-panel>
             </a-collapse>
+            <a-button type="primary" @click="goBack">Quay lại</a-button>
             <a-button html-type="submit" type="primary">Lưu</a-button>
         </a-form>
     </div>
@@ -201,6 +202,9 @@ export default {
         }
     },
     methods: {
+        goBack() {
+            this.$router.back();
+        },
         handleChange(info) {
             console.log(info)
         },
