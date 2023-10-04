@@ -5,8 +5,8 @@
 
                 <div class="col-12">
 
-                    <div v-if="this.$gate.isAdmin()" class="card">
-                        <div class="card-body">
+                    <div v-if="this.$gate.isAdmin()">
+                        <a-card style="margin-bottom: 25px">
                             <a-form class="ant-advanced-search-form" :form="form" @submit="handleSearch">
                                 <a-row :gutter="24">
                                     <a-col
@@ -15,7 +15,7 @@
                                         :span="8"
                                         :style="{ display: i < count ? 'block' : 'none' }"
                                     >
-                                        <a-form-item :label="`Field ${i}`">
+                                        <a-form-item addonBefore="true" :label="`Field ${i}`">
                                             <a-input
                                                 placeholder="placeholder"
                                             />
@@ -37,17 +37,11 @@
                                     </a-col>
                                 </a-row>
                             </a-form>
-                        </div>
+                        </a-card>
 
-                        <div class="card-header">
-                            <h3 class="card-title">Danh sách đoàn sinh</h3>
-                            <div class="card-tools">
-                                <a-button type="primary" @click="newModal"><i class="fa fa-plus-square"></i> Thêm mới
-                                </a-button>
-                            </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
+                        <a-card title="Danh sách đoàn sinh">
+                            <a-button type="primary" @click="newModal"><i class="fa fa-plus-square"></i> Thêm mới
+                            </a-button>
                             <a-table :columns="columns" :data-source="users.data.data"
                                      :scroll="{ x: 1500, y: 300 }">
                                 <a slot="stt" slot-scope="text, record, index">{{ index + 1 }}</a>
@@ -73,11 +67,8 @@
                                     </a-dropdown>
                                 </a>
                             </a-table>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <!--                            <pagination :data="users" @pagination-change-page="getResults"></pagination>-->
-                        </div>
+
+                        </a-card>
                     </div>
                     <!-- /.card -->
                 </div>
