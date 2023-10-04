@@ -7,7 +7,8 @@
 
                     <div v-if="this.$gate.isAdmin()">
                         <a-card style="margin-bottom: 25px">
-                            <a-form class="ant-advanced-search-form" :form="form" @submit="handleSearch">
+                            <a-form class="ant-advanced-search-form" layout="inline" :form="form"
+                                    @submit="handleSearch">
                                 <a-row :gutter="24">
                                     <a-col
                                         v-for="i in 10"
