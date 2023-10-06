@@ -6,58 +6,58 @@
 
 <template>
     <div class="content">
-        <a-form :form="form" :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+        <a-form :form="form" :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
             <a-collapse v-model="activeKey">
                 <a-collapse-panel key="1" header="Thông tin cá nhân">
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Tên Thánh">
-                                <a-input :v-model="form.ten_thanh" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.ten_thanh" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Tên gọi">
-                                <a-input :v-model="form.ten_goi" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.ten_goi" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Tên đầy đủ">
-                                <a-input :v-model="form.name" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.name" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Mật khẩu">
-                                <a-input :v-model="form.password" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.password" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Email">
-                                <a-input :v-model="form.email" html-type="email" placeholder="Vui lòng nhập"
-                                         allowClear/>
+                                <a-input v-model="form.email" allowClear html-type="email"
+                                         placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Số điện thoại">
-                                <a-input-number :v-model="form.so_dien_thoai" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input-number v-model="form.so_dien_thoai" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Trạng thái">
-                                <a-input :v-model="form.status" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.status" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Ảnh đại diện">
                                 <a-upload
-                                    name="file"
-                                    :multiple="true"
+                                    v-model="form.anh_dai_dien"
                                     :headers="headers"
+                                    :multiple="true"
+                                    name="file"
                                     @change="handleChange"
-                                    :v-model="form.anh_dai_dien"
                                 >
                                     <a-button>
                                         <a-icon type="upload"/>
@@ -72,95 +72,95 @@
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Ngày sinh">
-                                <a-date-picker :v-model="form.ngay_thang_nam_sinh" placeholder="Vui lòng chọn"
-                                               allowClear/>
+                                <a-date-picker v-model="form.ngay_thang_nam_sinh" allowClear
+                                               placeholder="Vui lòng chọn"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Ngày bổn mạng">
-                                <a-date-picker :v-model="form.ngay_bon_mang" placeholder="Vui lòng chọn" allowClear/>
+                                <a-date-picker v-model="form.ngay_bon_mang" allowClear placeholder="Vui lòng chọn"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Ngày rửa tội">
-                                <a-date-picker :v-model="form.ngay_rua_toi" placeholder="Vui lòng chọn" allowClear/>
+                                <a-date-picker v-model="form.ngay_rua_toi" allowClear placeholder="Vui lòng chọn"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Người ban Bí tích Rửa tội">
-                                <a-input :v-model="form.nguoi_rua_toi" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nguoi_rua_toi" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Người đỡ đầu rửa tội">
-                                <a-input :v-model="form.nguoi_do_dau_rua_toi" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nguoi_do_dau_rua_toi" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Ngày xưng tội lần đầu">
-                                <a-date-picker :v-model="form.ngay_xung_toi" placeholder="Vui lòng chọn" allowClear/>
+                                <a-date-picker v-model="form.ngay_xung_toi" allowClear placeholder="Vui lòng chọn"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Người ban Bí tích Giải tội">
-                                <a-input :v-model="form.nguoi_giai_toi" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nguoi_giai_toi" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Ngày thêm sức">
-                                <a-date-picker :v-model="form.ngay_them_suc" placeholder="Vui lòng chọn" allowClear/>
+                                <a-date-picker v-model="form.ngay_them_suc" allowClear placeholder="Vui lòng chọn"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Người ban Bí tích Thêm sức">
-                                <a-input :v-model="form.nguoi_them_suc" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nguoi_them_suc" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Người đỡ đầu thêm sức">
-                                <a-input :v-model="form.nguoi_do_dau_them_suc" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nguoi_do_dau_them_suc" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                 </a-collapse-panel>
-                <a-collapse-panel key="3" header="Thông tin phụ huynh">
+                <a-collapse-panel key="4" header="Thông tin phụ huynh">
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Tên bố">
-                                <a-input :v-model="form.ten_bo" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.ten_bo" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Số điện thoại bố">
-                                <a-input-number :v-model="form.sdt_bo" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input-number v-model="form.sdt_bo" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Nghề nghiệp bố">
-                                <a-input :v-model="form.nghe_nghiep_bo" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nghe_nghiep_bo" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Tên mẹ">
-                                <a-input :v-model="form.ten_me" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.ten_me" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Số điện thoại mẹ">
-                                <a-input-number :v-model="form.sdt_me" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input-number v-model="form.sdt_me" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Nghề nghiệp mẹ">
-                                <a-input :v-model="form.nghe_nghiep_me" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.nghe_nghiep_me" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
 
@@ -170,19 +170,19 @@
                     <a-row :gutter="gutter">
                         <a-col :span="colSpan_3">
                             <a-form-item label="Địa chỉ hành chính">
-                                <a-input :v-model="form.dia_chi_hanh_chinh" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.dia_chi_hanh_chinh" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                         <a-col :span="colSpan_3">
                             <a-form-item label="Địa chỉ giáo xứ">
-                                <a-input :v-model="form.ma_giao_xu" placeholder="Vui lòng nhập" allowClear/>
+                                <a-input v-model="form.ma_giao_xu" allowClear placeholder="Vui lòng nhập"/>
                             </a-form-item>
                         </a-col>
                     </a-row>
                 </a-collapse-panel>
             </a-collapse>
             <a-button type="primary" @click="goBack">Quay lại</a-button>
-            <a-button html-type="submit" type="primary">Lưu</a-button>
+            <a-button html-type="submit" type="primary" @click="handleSubmit">Lưu</a-button>
         </a-form>
     </div>
 </template>
@@ -222,28 +222,11 @@ export default {
 
             this.$Progress.finish();
         },
-        updateUser() {
-            this.$Progress.start();
-            this.form.put('api/user/' + this.form.id)
-                .then((response) => {
-                    // success
-                    $('#addNew').modal('hide');
-                    Toast.fire({
-                        icon: 'success',
-                        title: response.data.message
-                    });
-                    this.$Progress.finish();
-                    //  Fire.$emit('AfterCreate');
-
-                    this.loadUsers();
-                })
-                .catch(() => {
-                    this.$Progress.fail();
-                });
-
-        },
         handleSubmit() {
-            console.log(this.form)
+            axios.put('api/user/' + this.form.id, this.form)
+                .then((data) => {
+                    console.log(data)
+                });
         },
 
     },
@@ -252,14 +235,12 @@ export default {
     },
     created() {
         this.$Progress.start();
-        const userId = this.$route.params.userId;
-        console.log('User ID:', userId);
+        this.form.id = this.$route.params.userId;
         this.$Progress.finish();
     },
 
     watch: {
         activeKey(key) {
-            console.log(key);
         },
     },
 

@@ -6,6 +6,7 @@ use App\Http\Requests\Users\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request;
 
 
 class UserController extends BaseController
@@ -40,7 +41,7 @@ class UserController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Users\UserRequest  $request
+     * @param \App\Http\Requests\Users\UserRequest $request
      *
      * @param $id
      *
@@ -63,14 +64,15 @@ class UserController extends BaseController
     /**
      * Update the resource in storage
      *
-     * @param  \App\Http\Requests\Users\UserRequest  $request
+     * @param \App\Http\Requests\Users\UserRequest $request
      * @param $id
      *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        dd($request->input(), $id);
         $user = User::findOrFail($id);
 
         if (!empty($request->password)) {
@@ -85,7 +87,7 @@ class UserController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
