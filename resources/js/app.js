@@ -11,12 +11,17 @@ require('./bootstrap');
 import Vue from "vue";
 import moment from 'moment';
 
-import { Form, HasError, AlertError } from 'vform';
+import {Form, HasError, AlertError} from 'vform';
+
 window.Form = Form;
 
 import Gate from "./Gate";
+
 Vue.prototype.$gate = new Gate(window.user);
 Vue.prototype.$status = STATUS_USER;
+const hostname = window.location.hostname; // e.g., "example.com"
+const port = window.location.port;
+Vue.prototype.$baseUrl = `${hostname}${port ? ':' + port : ''}`;
 
 import Swal from 'sweetalert2';
 
@@ -28,19 +33,20 @@ const Toast = Swal.mixin({
     timer: 3000,
     timerProgressBar: true,
     onOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
-  })
+})
 window.Swal = Swal;
 window.Toast = Toast;
 
 import VueProgressBar from 'vue-progressbar'
+
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
     failedColor: 'red',
     height: '3px'
-  });
+});
 
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
@@ -50,10 +56,12 @@ Vue.component(AlertError.name, AlertError)
  * Routes imports and assigning
  */
 import VueRouter from 'vue-router';
+
 Vue.use(VueRouter);
 import routes from './routes';
 import 'ant-design-vue/dist/antd.css';
 import Antd from 'ant-design-vue';
+
 Vue.use(Antd);
 
 const router = new VueRouter({
@@ -96,7 +104,7 @@ Vue.component(
 
 // Filter Section
 
-Vue.filter('myDate',function(created){
+Vue.filter('myDate', function (created) {
     return moment(created).format('MMMM Do YYYY');
 });
 
