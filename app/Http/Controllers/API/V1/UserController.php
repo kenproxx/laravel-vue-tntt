@@ -72,7 +72,6 @@ class UserController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        dd($request->input(), $id);
         $user = User::findOrFail($id);
 
         if (!empty($request->password)) {
@@ -81,6 +80,7 @@ class UserController extends BaseController
 
         $user->update($request->all());
 
+        return response()->json(123);
         return $this->sendResponse($user, 'User Information has been updated');
     }
 

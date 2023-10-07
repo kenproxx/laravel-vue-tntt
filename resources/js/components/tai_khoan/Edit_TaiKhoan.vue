@@ -188,6 +188,8 @@
 </template>
 
 <script>
+import api from '../../api.js'
+
 export default {
     data() {
         return {
@@ -223,10 +225,13 @@ export default {
             this.$Progress.finish();
         },
         handleSubmit() {
-            axios.put('api/user/' + this.form.id, this.form)
-                .then((data) => {
-                    console.log(data)
-                });
+            if (this.$gate.isAdmin()) {
+                let url = this.$baseUrl + api.API_USER
+                axios.put(url + this.form.id, this.form)
+                    .then((data) => {
+                        console.log(data)
+                    });
+            }
         },
 
     },
@@ -236,6 +241,7 @@ export default {
     created() {
         this.$Progress.start();
         this.form.id = this.$route.params.userId;
+        console.log()
         this.$Progress.finish();
     },
 
