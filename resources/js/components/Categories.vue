@@ -9,7 +9,7 @@
               <div class="card-header">
                 <h3 class="card-title">Danh sách tham số</h3>
 
-                <div class="card-tools">
+                <div class="card-tools" >
 
                   <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProduct">
                       <i class="fa fa-plus-square"></i>
