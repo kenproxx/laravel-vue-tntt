@@ -24,9 +24,19 @@
                                 :bordered="true"
                                 :columns="columns"
                                 :data-source="listAddress"
-                            >
-                                <template #action="{text, recode, index}">
-                                    <span>{index}</span>
+                                :row-selection="rowSelection"
+                                :expanded-row-keys.sync="expandedRowKeys">
+<!--                                <template #action="{text, recode, index}">-->
+<!--                                    <a href="#" @click="editModal(user)">-->
+<!--                                        <i class="fa fa-edit blue"></i>-->
+<!--                                    </a>-->
+<!--                                    /-->
+<!--                                    <a href="#" @click="deleteUser(user.id)">-->
+<!--                                        <i class="fa fa-trash red"></i>-->
+<!--                                    </a>-->
+<!--                                </template>-->
+                                <template v-slot:action>
+                                    <a href="javascript:;">Delete</a>
                                 </template>
                             </a-table>
                         </div>
@@ -108,7 +118,19 @@
 import ATreeSelect from 'ant-design-vue/lib/tree-select';
 import {CAP_BAC_DIA_CHI} from '../../const.js'
 import {isEmpty} from "lodash";
+import moment from "moment";
 
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    onSelect: (record, selected, selectedRows) => {
+        console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected, selectedRows, changeRows) => {
+        console.log(selected, selectedRows, changeRows);
+    },
+};
 export default {
     components: {'a-tree-select': ATreeSelect},
 
@@ -151,6 +173,9 @@ export default {
                     title: 'Ngày tạo',
                     dataIndex: 'created_at',
                     key: 'created_at',
+                    customRender: (text, record) => {
+                        return moment(text).format('DD/MM/YYYY'); // Định dạng ngày tháng theo ý muốn
+                    },
                 },
                 {
                     title: 'Nguời sửa',
@@ -161,25 +186,21 @@ export default {
                     title: 'Ngày sửa',
                     dataIndex: 'updated_at',
                     key: 'updated_at',
+                    customRender: (text, record) => {
+                        return moment(text).format('DD/MM/YYYY'); // Định dạng ngày tháng theo ý muốn
+                    },
                 },
                 {
                     title: 'Thao tác',
                     dataIndex: 'action',
                     key: 'action',
-                    customRender: (text, record, index) => {
-                        const btn = `<a href="#" @click="editModal(user)">
-                                            <i class="fa fa-edit blue"></i>
-                                        </a>
-                                        /
-                                        <a href="#" @click="deleteUser(user.id)">
-                                            <i class="fa fa-trash red"></i>
-                                        </a>`
-                        return btn;
-                    },
+                    scopedSlots: { customRender: 'action' },
                 },
 
             ],
-            listAddress: []
+            listAddress: [],
+            rowSelection,
+            expandedRowKeys: [],
         }
     },
     methods: {
