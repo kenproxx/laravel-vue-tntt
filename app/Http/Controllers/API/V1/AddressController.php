@@ -51,10 +51,15 @@ class AddressController extends BaseController
         $root = Addresses::where('id', $request->input('parent_id'))->first();
         $address = $this->address->create([
             'data' => $request->get('name'),
+            'code' => generateRandomString(),
             'cap' => $request->get('cap'),
-            'created_by' => Auth::user()->name
+            'created_by' => Auth::user()->name,
         ]);
-        $address->makeChildOf($root);
+        if ($root == null) {
+            $address->makeRoot();
+        } else {
+            $address->makeChildOf($root);
+        }
         return $this->sendResponse($address, 'Tag Created Successfully');
     }
 

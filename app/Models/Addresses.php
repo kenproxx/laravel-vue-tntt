@@ -69,7 +69,7 @@ class Addresses extends Model
     //  */
 //     protected $scopeColumnNames = [];
 
-protected $fillable = ['data', 'cap', 'created_by', 'updated_by'];
+protected $fillable = ['data', 'cap', 'created_by', 'updated_by', 'code'];
     ////////////////////////////////////////////////////////////////////////////
 
     //
