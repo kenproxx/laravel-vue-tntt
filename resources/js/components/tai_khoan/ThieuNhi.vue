@@ -8,17 +8,97 @@
                     <div v-if="this.$gate.isAdmin()">
                         <a-card style="margin-bottom: 25px">
                             <a-form class="ant-advanced-search-form" layout="inline" :form="form"
-                                    @submit="handleSearch">
+                                    @submit="handleSearch"
+                                    :labelCol="labelCol"
+                                    :wrapperCol="wrapperCol"
+                            >
                                 <a-row :gutter="24">
                                     <a-col
-                                        v-for="i in 10"
-                                        :key="i"
                                         :span="8"
-                                        :style="{ display: i < count ? 'block' : 'none' }"
+                                        :style="{ display: 1 < count ? 'block' : 'none' }"
+
                                     >
-                                        <a-form-item addonBefore="true" :label="`Field ${i}`">
+                                        <a-form-item class="w-100" label="Mã">
                                             <a-input
                                                 placeholder="placeholder"
+                                                allowClear
+                                            />
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col
+                                        :span="8"
+                                        :style="{ display: 1 < count ? 'block' : 'none' }"
+                                    >
+                                        <a-form-item class="w-100" label="Tên">
+                                            <a-input
+                                                placeholder="placeholder"
+                                                allowClear
+                                            />
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col
+                                        :span="8"
+                                        :style="{ display: 1 < count ? 'block' : 'none' }"
+                                    >
+                                        <a-form-item class="w-100" label="Ngành">
+                                            <a-select
+                                                mode="multiple"
+                                                :default-value="['a1', 'b2']"
+                                                placeholder="Please select"
+                                                allowClear
+                                            >
+                                                <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
+                                                    {{ (i + 9).toString(36) + i }}
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col
+                                        :span="8"
+                                        :style="{ display: 1 < count ? 'block' : 'none' }"
+                                    >
+                                        <a-form-item class="w-100" label="Lớp">
+                                            <a-select
+                                                show-search
+                                                placeholder="Select a person"
+                                                option-filter-prop="children"
+                                                :filter-option="filterOption"
+                                                @focus="handleFocus"
+                                                @blur="handleBlur"
+                                                @change="handleChange"
+                                                allowClear
+                                            >
+                                                <a-select-option value="jack">
+                                                    Jack
+                                                </a-select-option>
+                                                <a-select-option value="lucy">
+                                                    Lucy
+                                                </a-select-option>
+                                                <a-select-option value="tom">
+                                                    Tom
+                                                </a-select-option>
+                                            </a-select>
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col
+                                        :span="8"
+                                        :style="{ display: 1 < count ? 'block' : 'none' }"
+                                    >
+                                        <a-form-item class="w-100" label="Email">
+                                            <a-input
+                                                placeholder="placeholder"
+                                                allowClear
+                                            />
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col
+                                        :span="8"
+                                        :style="{ display: 1 < count ? 'block' : 'none' }"
+                                    >
+                                        <a-form-item class="w-100" label="Số điện thoại">
+                                            <a-input
+                                                placeholder="placeholder"
+                                                allowClear
                                             />
                                         </a-form-item>
                                     </a-col>
@@ -31,10 +111,6 @@
                                         <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
                                             Clear
                                         </a-button>
-                                        <a :style="{ marginLeft: '8px', fontSize: '12px' }" @click="toggle">
-                                            Collapse
-                                            <a-icon :type="expand ? 'up' : 'down'"/>
-                                        </a>
                                     </a-col>
                                 </a-row>
                             </a-form>
@@ -161,6 +237,8 @@ export default {
         return {
             editmode: false,
             users: {},
+            labelCol: {span: 8},
+            wrapperCol: {span: 16},
             expand: false,
             form: new Form({
                 id: '',
@@ -218,9 +296,6 @@ export default {
             this.form.resetFields();
         },
 
-        toggle() {
-            this.expand = !this.expand;
-        },
         getResults(page = 1) {
 
             this.$Progress.start();
@@ -320,7 +395,22 @@ export default {
                         title: 'Some error occured! Please try again'
                     });
                 })
-        }
+        },
+
+        handleChange(value) {
+            console.log(`selected ${value}`);
+        },
+        handleBlur() {
+            console.log('blur');
+        },
+        handleFocus() {
+            console.log('focus');
+        },
+        filterOption(input, option) {
+            return (
+                option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            );
+        },
 
     },
     mounted() {
