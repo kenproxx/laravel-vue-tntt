@@ -43,12 +43,11 @@
                                         <a-form-item class="w-100" label="Ngành">
                                             <a-select
                                                 mode="multiple"
-                                                :default-value="['a1', 'b2']"
                                                 placeholder="Please select"
                                                 allowClear
                                             >
-                                                <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
-                                                    {{ (i + 9).toString(36) + i }}
+                                                <a-select-option v-for="nganh in nganhs" :value="nganh.value" :key="nganh">
+                                                    {{ nganh.title }}
                                                 </a-select-option>
                                             </a-select>
                                         </a-form-item>
@@ -261,8 +260,8 @@ export default {
                     fixed: 'left',
                     align: 'center'
                 },
-                {title: 'Tên Thánh', width: 100, dataIndex: 'ten_thanh', key: 'name', fixed: 'left'},
-                {title: 'Tên gọi', width: 100, dataIndex: 'name', key: 'age', fixed: 'left'},
+                {title: 'Tên Thánh', dataIndex: 'ten_thanh', key: 'name', fixed: 'left'},
+                {title: 'Tên gọi', dataIndex: 'name', key: 'age', fixed: 'left'},
                 {title: 'Lớp', dataIndex: 'lop_hoc_id', key: '5', width: 150},
                 {title: 'Ngành', dataIndex: 'address', key: '6', width: 150},
                 {title: 'Email', dataIndex: 'email', key: '7', width: 150},
@@ -275,7 +274,15 @@ export default {
                     scopedSlots: {customRender: 'action'},
                     align: 'center'
                 },
-            ]
+            ],
+            nganhs: [
+                {value: 'chien_con', title: 'Chiên con'},
+                {value: 'au_nhi', title: 'Ấu nhi'},
+                {value: 'thieu_nhi', title: 'Thiếu nhi'},
+                {value: 'nghia_sy', title: 'Nghĩa sỹ'},
+                {value: 'hiep_sy', title: 'Hiệp sỹ'},
+            ],
+
         }
     },
     computed: {

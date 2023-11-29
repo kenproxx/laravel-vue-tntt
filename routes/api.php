@@ -43,3 +43,9 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'address' => 'AddressController',
     ]);
 });
+
+Route::group(['prefix' => 'api'], function () {
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('get-list', [\App\Http\Controllers\API\admin\UserController::class, 'getUserAdmin'])->name('api.admin.user.get');
+    });
+});

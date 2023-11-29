@@ -36,7 +36,22 @@
 <!--                                    </a>-->
 <!--                                </template>-->
                                 <template v-slot:action>
-                                    <a href="javascript:;">Delete</a>
+                                    <a-dropdown>
+                                        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                            <a-icon type="menu"/>
+                                        </a>
+                                        <a-menu slot="overlay">
+                                            <a-menu-item>
+                                                <span @click="openModalAddUserAddress">Gắn user quản lý</span>
+                                            </a-menu-item>
+                                            <a-menu-item>
+                                                <a href="javascript:;">Sửa địa chỉ</a>
+                                            </a-menu-item>
+                                            <a-menu-item>
+                                                <a href="javascript:;">Xóa địa chỉ</a>
+                                            </a-menu-item>
+                                        </a-menu>
+                                    </a-dropdown>
                                 </template>
                             </a-table>
                         </div>
@@ -110,6 +125,16 @@
                     </div>
                 </div>
             </div>
+
+            <a-modal v-model:open="openModalAddUser" title="Basic Modal" >
+                <a-select
+                    v-model:value="value"
+                    mode="tags"
+                    style="width: 100%"
+                    placeholder="Tags Mode"
+                    :options="options"
+                ></a-select>
+            </a-modal>
         </div>
     </section>
 </template>
@@ -119,6 +144,7 @@ import ATreeSelect from 'ant-design-vue/lib/tree-select';
 import {CAP_BAC_DIA_CHI} from '../../const.js'
 import {isEmpty} from "lodash";
 import moment from "moment";
+const options = [...Array(25)].map((_, i) => ({ value: (i + 10).toString(36) + (i + 1) }));
 
 const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -137,7 +163,9 @@ export default {
     data() {
         return {
             editmode: false,
+            openModalAddUser: false,
             address: {},
+            options: options,
             addressList: {},
             form: new Form({
                 parent_id: '',
@@ -298,7 +326,11 @@ export default {
                         title: 'Some error occured! Please try again'
                     });
                 })
-        }
+        },
+
+        openModalAddUserAddress() {
+            this.openModalAddUser = true;
+        },
 
     },
     mounted() {
